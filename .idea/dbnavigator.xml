@@ -12,20 +12,19 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="5b7636d1-1300-4f7d-8af2-a8b3db4d1104">
-      <console name="Connection" type="STANDARD" schema="public" session="Main"><![CDATA[select * from person]]></console>
+    <connection id="2d4dd6be-ad5a-4f58-a6b2-9f783e6350c8">
+      <console name="Connection" type="STANDARD" schema="public" session="Main" />
+      <console name="crud_web_db" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="5b7636d1-1300-4f7d-8af2-a8b3db4d1104" object-ref="consoles/Connection" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="5b7636d1-1300-4f7d-8af2-a8b3db4d1104" />
+    <connection id="2d4dd6be-ad5a-4f58-a6b2-9f783e6350c8" />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
@@ -36,10 +35,10 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="5b7636d1-1300-4f7d-8af2-a8b3db4d1104" active="true" signed="true">
+      <connection id="2d4dd6be-ad5a-4f58-a6b2-9f783e6350c8" active="true" signed="true">
         <database>
-          <name value="Connection" />
-          <description value="crud_web_db" />
+          <name value="crud_web_db" />
+          <description value="" />
           <database-type value="POSTGRES" />
           <config-type value="BASIC" />
           <database-version value="16.1" />
