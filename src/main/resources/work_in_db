@@ -1,0 +1,103 @@
+
+
+create table director(
+    director_id serial primary key,
+    director_name varchar(100) not null unique,
+    age int check(age > 10)
+)
+
+create table movie(
+     movie_id serial primary key,
+     director_id int not null references director(director_id),
+     movie_name varchar(200) not null,
+     year_of_production int check(year_of_production > 1900)
+ )
+
+insert into director(director_name, age) values('tarantino', 57);
+insert into director(director_name, age) values('scorsese', 78);
+insert into director(director_name, age) values('ritchie', 52);
+insert into director(director_name, age) values('allen', 85);
+insert into director(director_name, age) values('lynch', 74);
+insert into director(director_name, age) values('nolan', 50);
+
+
+insert into movie(director_id, movie_name, year_of_production) values( 1, 'dogs', 1992);
+insert into movie(director_id, movie_name, year_of_production) values( 1, 'fiction', 1994);
+insert into movie(director_id, movie_name, year_of_production) values( 1, 'eight', 2015);
+insert into movie(director_id, movie_name, year_of_production) values( 1, 'hollywood', 2019);
+insert into movie(director_id, movie_name, year_of_production) values( 2, 'driver', 1976);
+insert into movie(director_id, movie_name, year_of_production) values( 2, 'goodfellas', 1990);
+insert into movie(director_id, movie_name, year_of_production) values( 2, 'wallstreet', 2013);
+insert into movie(director_id, movie_name, year_of_production) values( 3, 'lock stock', 1998);
+insert into movie(director_id, movie_name, year_of_production) values( 3, 'snatch', 2000);
+insert into movie(director_id, movie_name, year_of_production) values( 4, 'paris', 2011);
+insert into movie(director_id, movie_name, year_of_production) values( 6, 'inception', 2010);
+
+select director_name, m.movie_name from director join movie m on director.director_id = m.director_id
+select director_name, m.movie_name from director left join movie m on director.director_id = m.director_id
+
+create table actor(
+    actor_id serial primary key,
+    actor_name varchar(100) not null unique,
+    age int check (age > 0)
+)
+
+insert into actor(actor_name, "age") values ('keitel', 81);
+insert into actor(actor_name, "age") values ('de niro', 77);
+insert into actor(actor_name, "age") values ('dicaprio', 46);
+insert into actor(actor_name, "age") values ('statham', 53);
+insert into actor(actor_name, "age") values ('pesci', 77);
+insert into actor(actor_name, "age") values ('jackson', 72);
+
+create table actor_movie(
+    actor_id int references actor(actor_id),
+    movie_id int references movie(movie_id),
+    primary key (actor_id, movie_id)
+)
+
+insert into actor_movie values (1, 1);
+insert into actor_movie values (1, 2);
+insert into actor_movie values (2, 5);
+insert into actor_movie values (2, 6);
+insert into actor_movie values (3, 4);
+insert into actor_movie values (3, 7);
+insert into actor_movie values (3, 11);
+insert into actor_movie values (4, 8);
+insert into actor_movie values (4, 9);
+insert into actor_movie values (5, 6);
+insert into actor_movie values (6, 2);
+insert into actor_movie values (6, 3);
+
+ select actor.actor_name, movie.movie_name from actor join actor_movie
+    on actor.actor_id = actor_movie.actor_id join movie
+    on actor_movie.movie_id = movie.movie_id;
+
+
+40 ///////////каскадирование
+
+create table person(
+    user_id serial primary key,
+    "name" varchar(100) not null,
+    age int
+)
+
+create table "order"(
+    order_id int primary key,
+    user_id int references person(user_id),
+    item_name varchar(100)
+)
+
+drop table "order";
+drop table person;
+
+create table person(
+    user_id serial primary key,
+    "name" varchar(100) not null,
+    age int
+)
+
+create table "order"(
+    order_id int primary key,
+    user_id int references person(user_id) on delete cascade,
+    item_name varchar(100)
+)
