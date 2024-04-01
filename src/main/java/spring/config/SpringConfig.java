@@ -9,6 +9,10 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -18,10 +22,12 @@ import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 
 import javax.sql.DataSource;
 import java.util.Objects;
+import java.util.Properties;
 
 @Configuration
 @ComponentScan("spring")
 @EnableWebMvc
+@EnableTransactionManagement
 @PropertySource("classpath:database.properties")
 public class SpringConfig implements WebMvcConfigurer {
 
@@ -71,8 +77,35 @@ public class SpringConfig implements WebMvcConfigurer {
         return dataSource;
     }
 
-    @Bean
-    public JdbcTemplate jdbcTemplate(){
-        return new JdbcTemplate(dataSource());
+//    @Bean
+//    public JdbcTemplate jdbcTemplate(){
+//        return new JdbcTemplate(dataSource());
+//    }
+
+    private Properties hibernateProperties() {
+        Properties properties = new Properties();
+        properties.put("hibernate.dialect", environment.getProperty("hibernate.dialect"));
+        properties.put("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
+
+        return properties;
     }
+
+    @Bean
+    LocalSessionFactoryBean sessionFactory() {
+        LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
+        localSessionFactoryBean.setDataSource(dataSource());
+        localSessionFactoryBean.setPackagesToScan("spring.models");
+        localSessionFactoryBean.setHibernateProperties(hibernateProperties());
+
+        return localSessionFactoryBean;
+    }
+
+    @Bean
+    PlatformTransactionManager hibernateTransactionManager() {
+        HibernateTransactionManager hibernateTransactionManager = new HibernateTransactionManager();
+        hibernateTransactionManager.setSessionFactory(sessionFactory().getObject());
+
+        return hibernateTransactionManager;
+    }
+
 }

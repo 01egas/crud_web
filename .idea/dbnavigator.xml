@@ -13,16 +13,14 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="5b7636d1-1300-4f7d-8af2-a8b3db4d1104">
-      <console name="Connection" type="STANDARD" schema="public" session="Main"><![CDATA[insert into person(username, "age", email) values]]></console>
+      <console name="Connection" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="2d4dd6be-ad5a-4f58-a6b2-9f783e6350c8" object-ref="consoles/crud_web_db" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="5b7636d1-1300-4f7d-8af2-a8b3db4d1104" />
@@ -97,9 +95,10 @@
           <tcp-host-address value="" />
           <tcp-port-from value="4000" />
           <tcp-port-to value="4999" />
+          <debugger-type value="ASK" />
         </debugger>
-        <object-filters hide-empty-schemas="false" hide-pseudo-columns="false">
-          <object-type-filter>
+        <object-filters hide-empty-schemas="false" hide-pseudo-columns="false" hide-audit-columns="false">
+          <object-type-filter use-master-settings="true">
             <object-type name="SCHEMA" enabled="true" />
             <object-type name="USER" enabled="true" />
             <object-type name="ROLE" enabled="true" />
@@ -280,6 +279,7 @@
       <confirmations>
         <save-changes value="false" />
         <revert-changes value="true" />
+        <exit-on-changes value="ASK" />
       </confirmations>
     </code-editor-settings>
     <code-completion-settings>
@@ -478,9 +478,6 @@
         <compile-dependencies value="ASK" />
         <always-show-controls value="false" />
       </compiler>
-      <debugger>
-        <debugger-type value="ASK" />
-      </debugger>
     </operation-settings>
     <ddl-file-settings>
       <extensions>
