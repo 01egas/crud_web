@@ -77,11 +77,6 @@ public class SpringConfig implements WebMvcConfigurer {
         return dataSource;
     }
 
-//    @Bean
-//    public JdbcTemplate jdbcTemplate(){
-//        return new JdbcTemplate(dataSource());
-//    }
-
     private Properties hibernateProperties() {
         Properties properties = new Properties();
         properties.put("hibernate.dialect", environment.getProperty("hibernate.dialect"));

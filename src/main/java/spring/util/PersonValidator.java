@@ -26,7 +26,7 @@ public class PersonValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Person person = (Person) target;
         //если мэйл принадлежит текущему пользователю не выдавать ошибку
-        if (personDAO.show(person.getEmail()).isPresent()) {
+        if (personDAO.show(person.getId(), person.getEmail()).isPresent()) {
             errors.rejectValue("email", "", "this email is already taken");
         }
     }
