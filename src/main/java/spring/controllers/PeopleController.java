@@ -15,22 +15,16 @@ import spring.util.PersonValidator;
 @RequestMapping("/people")
 public class PeopleController {
 
-
     private  PeopleService peopleService;
-
-
     private  PersonValidator personValidator;
 
-
+    @Autowired
     public PeopleController(PeopleService peopleService, PersonValidator personValidator) {
         this.peopleService = peopleService;
         this.personValidator = personValidator;
     }
 
-    @Autowired
-    public PeopleController() {
-
-    }
+    public PeopleController() {}
 
     @GetMapping
     public String index(Model model) {
