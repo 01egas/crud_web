@@ -4,17 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import spring.dao.PersonDAO;
+
 import spring.models.Person;
+import spring.servicies.PeopleService;
 
 @Component
 public class PersonValidator implements Validator {
 
-    private final PersonDAO personDAO;
+    private PeopleService peopleService;
 
     @Autowired
-    public PersonValidator(PersonDAO personDAO) {
-        this.personDAO = personDAO;
+    public PersonValidator(PeopleService peopleService) {
+        this.peopleService = peopleService;
     }
 
     @Override
@@ -26,8 +27,10 @@ public class PersonValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Person person = (Person) target;
         //если мэйл принадлежит текущему пользователю не выдавать ошибку
-        if (personDAO.show(person.getId(), person.getEmail()).isPresent()) {
+        Person findingPerson = peopleService.findByEmail(person.getId(), person.getEmail());
+        if (findingPerson != null && person.getId() != findingPerson.getId()) {
             errors.rejectValue("email", "", "this email is already taken");
         }
+
     }
 }
