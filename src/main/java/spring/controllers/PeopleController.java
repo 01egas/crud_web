@@ -1,11 +1,15 @@
 package spring.controllers;
 
+
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import spring.config.TestBean;
 import spring.dao.PersonDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import spring.models.Person;
@@ -15,8 +19,10 @@ import spring.util.PersonValidator;
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
+
 //    private final PersonDAO personDAO;
     private final PersonValidator personValidator;
+
 
     private final PeopleService peopleService;
 
@@ -25,16 +31,20 @@ public class PeopleController {
 
     @Autowired
     public PeopleController(PeopleService peopleService, PersonValidator personValidator) {
-//        this.personDAO = personDAO;
         this.peopleService = peopleService;
         this.personValidator = personValidator;
     }
 
+    public PeopleController() {}
+
     @GetMapping
     public String index(Model model) {
         //получим все элементы из дао для отображения в представлении
+
         System.out.println(testBean.sayHi());
 //        model.addAttribute("people", personDAO.index());
+
+
         model.addAttribute("people", peopleService.findAll());
         return "people/index";
     }
@@ -76,14 +86,18 @@ public class PeopleController {
             return "people/edit";
         }
         peopleService.update(id, person);
+
 //        personDAO.update(id, person);
+
         return "redirect:/people";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
         peopleService.delete(id);
+
 //        personDAO.delete(id);
+
         return "redirect:/people";
     }
 }

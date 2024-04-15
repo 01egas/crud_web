@@ -12,7 +12,9 @@ import java.util.Optional;
 @Repository
 public interface PeopleRepository extends JpaRepository<Person, Integer> {
 
+
 //    @Query("SELECT u FROM User u WHERE u.email = :email")
 //    Optional<Person> findByEmail(@Param("email")String email);
 
 }
+
