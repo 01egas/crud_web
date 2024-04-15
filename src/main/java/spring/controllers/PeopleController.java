@@ -7,7 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import spring.config.TestBean;
-import spring.dao.PersonDAO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -23,7 +23,6 @@ public class PeopleController {
 //    private final PersonDAO personDAO;
     private final PersonValidator personValidator;
 
-
     private final PeopleService peopleService;
 
     @Autowired
@@ -35,7 +34,6 @@ public class PeopleController {
         this.personValidator = personValidator;
     }
 
-    public PeopleController() {}
 
     @GetMapping
     public String index(Model model) {
