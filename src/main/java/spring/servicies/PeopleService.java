@@ -32,11 +32,13 @@ public class PeopleService {
         return person.orElse(null);
     }
 
-    @Transactional
-    public Person findByEmail(int id, String email) {
-        Optional<Person> person = peopleRepository.findByEmail(email);
-        return person.orElse(null);
-    }
+
+//    @Transactional
+//    public Person findByEmail(int id, String email) {
+//        Optional<Person> person = peopleRepository.findByEmail(email);
+//        return person.orElse(null);
+//    }
+
 
     @Transactional
     public void save(Person person) {

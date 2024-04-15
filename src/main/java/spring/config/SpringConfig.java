@@ -7,12 +7,18 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
+
+import org.springframework.orm.jpa.JpaVendorAdapter;
+
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -35,7 +41,8 @@ import java.util.Properties;
 @EnableWebMvc
 @EnableTransactionManagement
 @PropertySource("classpath:database.properties")
-@EnableJpaRepositories(value = "spring.repositories")
+@EnableJpaRepositories("spring.repositories")
+
 public class SpringConfig implements WebMvcConfigurer {
 
     private final ApplicationContext applicationContext;
@@ -102,27 +109,46 @@ public class SpringConfig implements WebMvcConfigurer {
 //        return localSessionFactoryBean;
 //    }
 
-    @Bean(name = "transactionManager")
-    PlatformTransactionManager transactionManager() {
+
+//    @Bean
+//    PlatformTransactionManager hibernateTransactionManager() {
 //        HibernateTransactionManager hibernateTransactionManager = new HibernateTransactionManager();
 //        hibernateTransactionManager.setSessionFactory(sessionFactory().getObject());
-        JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
-        jpaTransactionManager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
+//
+//        return hibernateTransactionManager;
+//    }
 
-        return jpaTransactionManager;
+    @Bean
+    TestBean testBean() {
+        return new TestBean();
     }
 
-    @Bean(name = "entityManagerFactoryBean")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
-        final LocalContainerEntityManagerFactoryBean entityManager = new LocalContainerEntityManagerFactoryBean();
-        entityManager.setDataSource(dataSource());
-        entityManager.setPackagesToScan("spring.models");
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        LocalContainerEntityManagerFactoryBean em
+                = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource(dataSource());
+        em.setPackagesToScan("spring.models");
 
-        final HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
-        entityManager.setJpaVendorAdapter(hibernateJpaVendorAdapter);
-        entityManager.setJpaProperties(hibernateProperties());
+        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        em.setJpaVendorAdapter(vendorAdapter);
+        em.setJpaProperties(hibernateProperties());
 
-        return entityManager;
+        return em;
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager() {
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+
+        return transactionManager;
+    }
+
+    @Bean
+    public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
+        return new PersistenceExceptionTranslationPostProcessor();
+
     }
 
 }
