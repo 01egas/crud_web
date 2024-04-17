@@ -1,5 +1,6 @@
 package spring.util;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -7,6 +8,8 @@ import org.springframework.validation.Validator;
 
 import spring.models.Person;
 import spring.servicies.PeopleService;
+
+import java.util.regex.Pattern;
 
 @Component
 public class PersonValidator implements Validator {
@@ -31,6 +34,11 @@ public class PersonValidator implements Validator {
         if (findingPerson != null && person.getId() != findingPerson.getId()) {
             errors.rejectValue("email", "", "this email is already taken");
         }
-
+        String DATE_PATTERN = "^\\d{2}.\\d{2}.\\d{4}$";
+        if (person.getDateOfBirth() == null || person.getDateOfBirth().toString().matches(DATE_PATTERN)) {
+            errors.rejectValue("dateOfBirth", "", "format dd.MM.yyyy");
+        }
     }
+
+
 }

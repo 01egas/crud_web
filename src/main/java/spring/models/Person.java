@@ -2,6 +2,9 @@ package spring.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 @Entity
 @Table(name = "person")
@@ -29,6 +32,34 @@ public class Person {
    @Column(name = "address")
     @Pattern(regexp = "[A-Z]\\w+, [A-Z]\\w+, \\d{6}", message = "Your address should be in this format: Country, City, postal code(6 digits)")
     private String address;
+
+
+   @Column(name = "date_of_birth")
+   @Temporal(TemporalType.DATE)
+//   @Pattern(regexp = "\\d{2}.\\d{2}.\\d{4}", message = "format dd.MM.yyyy")
+   @DateTimeFormat(pattern = "dd.MM.yyyy")
+   private Date dateOfBirth;
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @Column(name = "created_at")
+   @Temporal(TemporalType.TIMESTAMP)
+   private Date createdAt;
+
 
     public String getAddress() {
         return address;
