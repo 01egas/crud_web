@@ -7,14 +7,17 @@ import org.springframework.stereotype.Repository;
 import spring.models.Person;
 
 import javax.swing.text.html.Option;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface PeopleRepository extends JpaRepository<Person, Integer> {
 
+    List<Person> findByUsername(String username);
 
-//    @Query("SELECT u FROM User u WHERE u.email = :email")
-//    Optional<Person> findByEmail(@Param("email")String email);
+    List<Person> findByUsernameOrderByAge(String username);
+
+    Optional<Person> findByEmail(String email);
 
 }
 

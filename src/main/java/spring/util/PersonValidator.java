@@ -26,7 +26,7 @@ public class PersonValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Person person = (Person) target;
-        //если мэйл принадлежит текущему пользователю не выдавать ошибку
+//        если мэйл принадлежит текущему пользователю не выдавать ошибку
         Person findingPerson = peopleService.findByEmail(person.getId(), person.getEmail());
         if (findingPerson != null && person.getId() != findingPerson.getId()) {
             errors.rejectValue("email", "", "this email is already taken");
