@@ -26,6 +26,10 @@
     <input type="text" th:field="*{dateOfBirth}" id="dateOfBirth">
     <div style="color:red" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">dateOfBirth</div>
     <br/>
+    <label for="mood">Enter mood</label>
+    <input type="text" th:field="*{mood}" id="mood">
+    <div style="color:red" th:if="${#fields.hasErrors('mood')}" th:errors="*{mood}">mood</div>
+    <br/>
 
     <input type="submit" value="Update">
 </form>

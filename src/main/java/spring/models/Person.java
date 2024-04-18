@@ -9,36 +9,49 @@ import java.util.Date;
 @Entity
 @Table(name = "person")
 public class Person {
-   @Id
-   @Column(name = "id")
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-   @Column(name = "username")
-   @NotEmpty(message = "Name should not be empty!")
+    @Column(name = "username")
+    @NotEmpty(message = "Name should not be empty!")
     @Size(min = 2, max = 30, message = "Name should be between 2 and 30 characters!")
     private String username;
 
 
-   @Column(name = "age")
+    @Column(name = "age")
     @Min(value = 0, message = "Age should be greater than zero!")
     private int age;
 
-   @Column(name = "email")
+    @Column(name = "email")
     @NotEmpty(message = "email should not be empty!")
     @Email(message = "email should be valid")
     private String email;
 
-   @Column(name = "address")
-    @Pattern(regexp = "[A-Z]\\w+, [A-Z]\\w+, \\d{6}", message = "Your address should be in this format: Country, City, postal code(6 digits)")
+    @Column(name = "address")
+    @Pattern(regexp = "[A-Z]\\w+, [A-Z]\\w+, \\d{6}",
+            message = "Your address should be in this format: Country, City, postal code(6 digits)")
     private String address;
 
 
-   @Column(name = "date_of_birth")
-   @Temporal(TemporalType.DATE)
+    @Column(name = "date_of_birth")
+    @Temporal(TemporalType.DATE)
 //   @Pattern(regexp = "\\d{2}.\\d{2}.\\d{4}", message = "format dd.MM.yyyy")
-   @DateTimeFormat(pattern = "dd.MM.yyyy")
-   private Date dateOfBirth;
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
+    private Date dateOfBirth;
+
+    @Enumerated(EnumType.STRING)//если ordinal то буду сохраняться числовые значения по индексу перечисления
+    @Column(name = "mood")
+    private Mood mood;
+
+    public Mood getMood() {
+        return mood;
+    }
+
+    public void setMood(Mood mood) {
+        this.mood = mood;
+    }
 
     public Date getDateOfBirth() {
         return dateOfBirth;
@@ -57,8 +70,8 @@ public class Person {
     }
 
     @Column(name = "created_at")
-   @Temporal(TemporalType.TIMESTAMP)
-   private Date createdAt;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
 
 
     public String getAddress() {
